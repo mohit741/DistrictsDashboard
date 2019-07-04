@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2c2b20d3-d841-4fb9-a7d9-8e35b1d2db22" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DistrictsDashboard/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DistrictsDashboard/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +20,7 @@
         <entry file="file://$PROJECT_DIR$/DashboardApi/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="16" column="25" lean-forward="true" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+              <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -43,11 +43,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DistrictsDashboard/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2261">
-              <caret line="133" column="21" selection-start-line="133" selection-start-column="21" selection-end-line="133" selection-end-column="21" />
+            <state relative-caret-position="200">
+              <caret line="134" column="1" selection-start-line="134" selection-start-column="1" selection-end-line="134" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -73,11 +73,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+            <state relative-caret-position="17">
+              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -147,7 +147,6 @@
         <option value="$PROJECT_DIR$/DashboardApi/helpers/constants.py" />
         <option value="$PROJECT_DIR$/DashboardApi/urls.py" />
         <option value="$PROJECT_DIR$/DistrictsDashboard/urls.py" />
-        <option value="$PROJECT_DIR$/DistrictsDashboard/settings.py" />
         <option value="$PROJECT_DIR$/DashboardApi/helpers/exceptions.py" />
         <option value="$PROJECT_DIR$/DashboardApi/helpers/helper.py" />
         <option value="$PROJECT_DIR$/DashboardApi/views.py" />
@@ -155,6 +154,7 @@
         <option value="$PROJECT_DIR$/indicators/models.py" />
         <option value="$PROJECT_DIR$/DashboardApi/serializers.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/DistrictsDashboard/settings.py" />
       </list>
     </option>
   </component>
@@ -182,33 +182,6 @@
               <item name="DistrictsDashboard" type="b2602c69:ProjectViewProjectNode" />
               <item name="DistrictsDashboard" type="462c0819:PsiDirectoryNode" />
               <item name="DashboardApi" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DistrictsDashboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DistrictsDashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="DashboardApi" type="462c0819:PsiDirectoryNode" />
-              <item name="helpers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DistrictsDashboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DistrictsDashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="DistrictsDashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DistrictsDashboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DistrictsDashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="indicators" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DistrictsDashboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DistrictsDashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="indicators" type="462c0819:PsiDirectoryNode" />
-              <item name="helpers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DistrictsDashboard" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DistrictsDashboard" type="462c0819:PsiDirectoryNode" />
-              <item name="regions" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DistrictsDashboard" type="b2602c69:ProjectViewProjectNode" />
@@ -368,7 +341,7 @@
       <workItem from="1562131686019" duration="15353000" />
       <workItem from="1562165978732" duration="7222000" />
       <workItem from="1562214835690" duration="22719000" />
-      <workItem from="1562253292036" duration="3189000" />
+      <workItem from="1562253292036" duration="4831000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1562258953109</created>
@@ -377,17 +350,30 @@
       <option name="project" value="LOCAL" />
       <updated>1562258953109</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Initial commit">
+      <created>1562261534863</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1562261534863</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Initial commit">
+      <created>1562262667174</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1562262667174</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59165000" />
+    <option name="totallyTimeSpent" value="60807000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16178624" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16178624" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -403,7 +389,7 @@
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50073206" side_tool="true" weight="0.328594" />
       <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.49926794" weight="0.27172196" />
       <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="manage.py@DistrictsDashboard" order="13" sideWeight="0.49853587" visible="true" weight="0.4044234" />
+      <window_info active="true" anchor="bottom" id="manage.py@DistrictsDashboard" order="13" sideWeight="0.49853587" visible="true" weight="0.4044234" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -533,7 +519,7 @@
     <entry file="file://$PROJECT_DIR$/DashboardApi/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="16" column="25" lean-forward="true" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+          <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -548,13 +534,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DistrictsDashboard/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2261">
-          <caret line="133" column="21" selection-start-line="133" selection-start-column="21" selection-end-line="133" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -601,8 +580,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="26" lean-forward="true" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+        <state relative-caret-position="17">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DistrictsDashboard/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="134" column="1" selection-start-line="134" selection-start-column="1" selection-end-line="134" selection-end-column="1" />
         </state>
       </provider>
     </entry>
