@@ -2,7 +2,9 @@ health_indicators = {
     '1.1': {
         'name': 'Percentage of pregnant women receiving 4 or more antenatal care check-ups to the total no. of pregnant women registered for antenatal care',
         'num': 'No. of pregnant women receiving 4 or more antenatal care check-ups during the year',
-        'den': 'Total no. of pregnant women registered for antenatal care during the year'
+        'den': 'Total no. of pregnant women registered for antenatal care during the year',
+        'weight': 0.6
+
     },
     '1.2': {
         'name': 'Percentage of ANC registered within the first trimester against Total ANC Registration',

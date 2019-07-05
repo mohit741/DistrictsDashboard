@@ -1,33 +1,18 @@
 import pandas as pd
+from rest_framework import generics
 from rest_framework import status
-from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
 
-from DashboardApi.helpers.constants import *
 from DashboardApi.helpers.exceptions import InvalidDataException
 from DashboardApi.helpers.helper import pairwise
 from indicators.models import Indicator
-from regions.models import Panchayat, Block
-from .serializers import HealthSerializer
+from regions.models import Block
+from .serializers import IndicatorSerializer
 
 
-# Create your views here.
 # Posting data from excel file
-# Health Report Upload
-class HealthViewSet(ModelViewSet):
-    serializer_class = HealthSerializer
-
-    @action(methods=['post'], detail=False)
-    def add(self, request):
-        file = request.FILES['health_sheet']
-        df = pd.read_excel(file)
-        print(df.columns)
-        return Response(status=HTTP_SUCCESS)
-
-
 class HealthUploadView(APIView):
     parser_classes = (MultiPartParser,)
 
@@ -44,9 +29,27 @@ class HealthUploadView(APIView):
 
     def get(self, request):
         objs = Indicator.objects.all()
-        serializer = HealthSerializer(objs, many=True)
+        serializer = IndicatorSerializer(objs, many=True)
         return Response({"all_health_indicators": serializer.data})
 
+
+class BlockWiseList(generics.ListAPIView):
+    serializer_class = IndicatorSerializer
+
+    def get_queryset(self):
+        queryset = Indicator.objects.all()
+        sector = self.request.query_params.get('sector', None)
+        block = self.request.query_params.get('block', None)
+        serial = self.request.query_params.get('serial', None)
+        year = self.request.query_params.get('year', None)
+        month = self.request.query_params.get('month', None)
+        queryset = queryset.filter(sector=sector) if sector is not None else queryset
+        queryset = queryset.filter(block__name=block) if block is not None else queryset
+        queryset = queryset.filter(serial=serial) if serial is not None else queryset
+        queryset = queryset.filter(created__year=year) if year is not None else queryset
+        queryset = queryset.filter(created__month=month) if month is not None else queryset
+        print(queryset)
+        return queryset
 
 # Check if the data is valid
 def validate_data(df):
@@ -75,8 +78,6 @@ def validate_data(df):
 
 # Create indicator using data from excel sheet
 def create_model(data, _block, _sector):
-    weightage = 0.0
-    panchayat = Panchayat.objects.get(name='Patratu')
     block = Block.objects.get(name=_block)
     for key in data:
         serial = str(key)
@@ -87,11 +88,10 @@ def create_model(data, _block, _sector):
         # print(per)
         Indicator.objects.create(
             serial=serial,
-            weightage=weightage,
             block=block,
-            panchayat=panchayat,
             numerator=num,
             denominator=den,
             percent=per,
-            sector=_sector
+            sector=_sector,
+            created='2019-05-01'
         )
