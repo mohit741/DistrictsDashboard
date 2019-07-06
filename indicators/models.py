@@ -10,7 +10,7 @@ class Indicator(models.Model):
     serial = models.CharField(max_length=5)
     numerator = models.PositiveIntegerField()
     denominator = models.PositiveIntegerField()
-    percent = models.DecimalField(max_digits=5, decimal_places=2)
+    percent = models.DecimalField(max_digits=8, decimal_places=5)
     sector = models.CharField(max_length=15)
     block = models.ForeignKey(Block, related_name='block', on_delete=models.CASCADE)
     created = models.DateField()
@@ -34,11 +34,17 @@ class Indicator(models.Model):
     def get_den_name(self):
         return health_indicators[self.serial]['den']
 
+    @property
+    def get_weight(self):
+        return health_indicators[self.serial]['weight']
+
     @staticmethod
-    def get_sector_minmax(sector, month, year):
-        indicators = Indicator.objects.filter(sector=sector, created__year=year, created__month=month).aggregate(
+    def get_serial_minmax(serial, month, year):
+        indicators = Indicator.objects.filter(serial=serial, created__year=year, created__month=month).aggregate(
             min=Min('percent'), max=Max('percent'))
         rnge = indicators['max'] - indicators['min']
+        print(indicators['max'])
+        print(indicators['min'])
         return indicators['min'], indicators['max'], rnge
 
     @staticmethod
@@ -53,3 +59,25 @@ class Indicator(models.Model):
             min=Min('percent'), max=Max('percent'))
         rnge = indicators['max'] - indicators['min']
         return indicators['min'], indicators['max'], rnge
+
+
+class Score(models.Model):
+    composite = models.DecimalField(max_digits=7, decimal_places=3)
+    rank = models.PositiveIntegerField()
+    block = models.ForeignKey(Block, related_name='block_score', on_delete=models.CASCADE)
+    period = models.DateField()
+
+    def __str__(self):
+        return self.block.name + '_' + self.period.strftime('%m-%Y')
+
+    @property
+    def get_block(self):
+        return self.block.name
+
+    @staticmethod
+    def get_best(month, year):
+        return Score.objects.get(rank=1, period__month=month, period__year=year)
+
+    @staticmethod
+    def get_worst(month, year):
+        return Score.objects.get(rank=18, period__month=month, period__year=year)

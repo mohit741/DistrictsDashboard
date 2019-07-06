@@ -11,6 +11,7 @@ router = DefaultRouter()
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
     path('health/', views.HealthUploadView.as_view()),
-    path('query/', views.BlockWiseList.as_view()),
+    path('query/blocks', views.BlockWiseList.as_view()),
+    path('query/ranks', views.BlockWiseRankList.as_view()),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

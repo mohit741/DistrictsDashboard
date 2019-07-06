@@ -12,3 +12,11 @@ class IndicatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Indicator
         fields = '__all__'
+
+
+class BlockRankSerializer(serializers.ModelSerializer):
+    block = serializers.CharField(source='get_block', max_length=50)
+
+    class Meta:
+        model = Score
+        fields = '__all__'
