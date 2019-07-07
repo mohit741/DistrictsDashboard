@@ -1,5 +1,4 @@
 import datetime
-import random
 from operator import itemgetter
 
 import pandas as pd
@@ -30,7 +29,7 @@ class HealthUploadView(APIView):
             blocks = [_block for _block in data]
             month = datetime.datetime.strptime(date, '%Y-%m-%d').month
             year = datetime.datetime.strptime(date, '%Y-%m-%d').year
-            calculate_score(blocks=blocks, month=month, year=year)
+            calculate_score(blocks=blocks, month=month, year=year, sector=sector)
         except InvalidDataException as e:
             print(e)
             return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -52,12 +51,15 @@ class BlockWiseList(generics.ListAPIView):
         serial = self.request.query_params.get('serial', None)
         year = self.request.query_params.get('year', None)
         month = self.request.query_params.get('month', None)
+        ranked = self.request.query_params.get('ranked', None)
         queryset = queryset.filter(sector=sector) if sector is not None else queryset
         queryset = queryset.filter(block__name=block) if block is not None else queryset
         queryset = queryset.filter(serial=serial) if serial is not None else queryset
         queryset = queryset.filter(created__year=year) if year is not None else queryset
         queryset = queryset.filter(created__month=month) if month is not None else queryset
-        # print(queryset)
+        if ranked is not None:
+            if ranked:
+                queryset = queryset.order_by('-percent')
         return queryset
 
 
@@ -67,11 +69,9 @@ class BlockWiseRankList(generics.ListAPIView):
     def get_queryset(self):
         queryset = Score.objects.all()
         block = self.request.query_params.get('block', None)
-        # serial = self.request.query_params.get('serial', None)
         year = self.request.query_params.get('year', None)
         month = self.request.query_params.get('month', None)
         queryset = queryset.filter(block__name=block) if block is not None else queryset
-        # queryset = queryset.filter(serial=serial) if serial is not None else queryset
         queryset = queryset.filter(period__year=year) if year is not None else queryset
         queryset = queryset.filter(period__month=month) if month is not None else queryset
         queryset = queryset.order_by('rank')
@@ -121,12 +121,11 @@ def create_model(data, date, _sector):
         print(date)
         for key in data[_block]:
             serial = str(key)
-            num = random.randrange(1000, 5000)
-            den = random.randrange(5001, 9999)
-            # num = data[_block][key][0]
-            # den = data[_block][key][1]
+            # num = random.randrange(1000, 5000)
+            # den = random.randrange(5001, 9999)
+            num = data[_block][key][0]
+            den = data[_block][key][1]
             per = float((float(num) / den) * 100)
-            per = per if per <= 100.00 else 100.00
             # print('{} {} {} {}'.format(serial, num, den, per))
             Indicator.objects.create(
                 serial=serial,
@@ -157,6 +156,8 @@ def calculate_score(blocks, sector, month, year):
         cmp = 0.0
         total_weight = 0.0
         for key in health_indicators:
+            if vals[key]['range'] == 0:
+                continue
             obj2 = obj1.filter(serial=key).first()
             per = float(obj2.percent)
             cmp = cmp + health_indicators[key]['weight'] * ((per - vals[key]['min']) / vals[key]['range'])

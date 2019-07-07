@@ -23,6 +23,10 @@ class Indicator(models.Model):
         return self.block.name
 
     @property
+    def get_percent(self):
+        return self.percent
+
+    @property
     def get_indicator_name(self):
         return health_indicators[self.serial]['name']
 
