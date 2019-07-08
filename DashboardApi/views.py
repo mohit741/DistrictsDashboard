@@ -62,6 +62,19 @@ class BlockWiseList(generics.ListAPIView):
                 queryset = queryset.order_by('-percent')
         return queryset
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = IndicatorSerializer(queryset, many=True)
+        serial = self.request.query_params.get('serial', None)
+        year = self.request.query_params.get('year', None)
+        month = self.request.query_params.get('month', None)
+        max_score = Indicator.max_percent(serial=serial, month=month,
+                                          year=year) if serial and month and year is not None else None
+        new_serializer_data = list(serializer.data)
+        if max_score is not None:
+            new_serializer_data.append({'max_percent': max_score})
+        return Response(new_serializer_data)
+
 
 class BlockWiseRankList(generics.ListAPIView):
     serializer_class = BlockRankSerializer

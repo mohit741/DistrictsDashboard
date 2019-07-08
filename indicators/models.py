@@ -43,6 +43,13 @@ class Indicator(models.Model):
         return health_indicators[self.serial]['weight']
 
     @staticmethod
+    def max_percent(serial, year, month):
+        mx = Indicator.objects.filter(serial=serial, created__year=year, created__month=month).aggregate(
+            max=Max('percent')
+        )
+        return mx['max']
+
+    @staticmethod
     def get_serial_minmax(serial, month, year):
         indicators = Indicator.objects.filter(serial=serial, created__year=year, created__month=month).aggregate(
             min=Min('percent'), max=Max('percent'))
