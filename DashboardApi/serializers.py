@@ -9,6 +9,7 @@ class IndicatorSerializer(serializers.ModelSerializer):
     numerator_name = serializers.CharField(source='get_num_name', max_length=300)
     denominator_name = serializers.CharField(source='get_den_name', max_length=300)
     percent = serializers.DecimalField(source='get_percent', max_digits=5, decimal_places=2)
+    max = serializers.DecimalField(max_digits=5, decimal_places=2)
 
     class Meta:
         model = Indicator

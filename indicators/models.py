@@ -11,6 +11,7 @@ class Indicator(models.Model):
     numerator = models.PositiveIntegerField()
     denominator = models.PositiveIntegerField()
     percent = models.DecimalField(max_digits=8, decimal_places=5)
+    max = models.DecimalField(max_digits=8, decimal_places=5, default=0.00)
     sector = models.CharField(max_length=15)
     block = models.ForeignKey(Block, related_name='block', on_delete=models.CASCADE)
     created = models.DateField()
