@@ -50,17 +50,20 @@ class HealthUploadView(APIView):
 class BlockWiseList(generics.ListAPIView):
     serializer_class = IndicatorSerializer
 
+    def get(self, request, *args, **kwargs):
+        token = self.request.query_params.get('token', None)
+        if token is None or token != TOKEN:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return self.list(request=request)
+
     def get_queryset(self):
-        queryset = Indicator.objects.all()
         sector = self.request.query_params.get('sector', None)
         block = self.request.query_params.get('block', None)
         serial = self.request.query_params.get('serial', None)
         year = self.request.query_params.get('year', None)
         month = self.request.query_params.get('month', None)
         ranked = self.request.query_params.get('ranked', None)
-        token = self.request.query_params.get('token', None)
-        if token is None or token != TOKEN:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        queryset = Indicator.objects.all()
         queryset = queryset.filter(sector=sector) if sector is not None else queryset
         queryset = queryset.filter(block__name=block) if block is not None else queryset
         queryset = queryset.filter(serial=serial) if serial is not None else queryset
@@ -88,14 +91,17 @@ class BlockWiseList(generics.ListAPIView):
 class BlockWiseRankList(generics.ListAPIView):
     serializer_class = BlockRankSerializer
 
+    def get(self, request, *args, **kwargs):
+        token = self.request.query_params.get('token', None)
+        if token is None or token != TOKEN:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return self.list(request=request)
+
     def get_queryset(self):
         queryset = Score.objects.all()
         block = self.request.query_params.get('block', None)
         year = self.request.query_params.get('year', None)
         month = self.request.query_params.get('month', None)
-        token = self.request.query_params.get('token', None)
-        if token is None or token != TOKEN:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
         queryset = queryset.filter(block__name=block) if block is not None else queryset
         queryset = queryset.filter(period__year=year) if year is not None else queryset
         queryset = queryset.filter(period__month=month) if month is not None else queryset
