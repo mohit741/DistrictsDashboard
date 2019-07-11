@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from DashboardApi.helpers.exceptions import InvalidDataException
 from DashboardApi.helpers.helper import pairwise
-from indicators.helpers.strings import health_indicators
+from indicators.helpers.strings import health_indicators, TOKEN
 from indicators.models import Indicator, Score
 from regions.models import Block
 from .serializers import IndicatorSerializer, BlockRankSerializer
@@ -21,6 +21,9 @@ class HealthUploadView(APIView):
     parser_classes = (MultiPartParser,)
 
     def post(self, request):
+        token = self.request.query_params.get('token', None)
+        if token is None or token != TOKEN:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         f = request.FILES['health_sheet']
         df = pd.read_excel(f)
         try:
@@ -36,6 +39,9 @@ class HealthUploadView(APIView):
         return Response(status=status.HTTP_201_CREATED)
 
     def get(self, request):
+        token = self.request.query_params.get('token', None)
+        if token is None or token != TOKEN:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         objs = Indicator.objects.all()
         serializer = IndicatorSerializer(objs, many=True)
         return Response({"all_health_indicators": serializer.data})
@@ -52,6 +58,9 @@ class BlockWiseList(generics.ListAPIView):
         year = self.request.query_params.get('year', None)
         month = self.request.query_params.get('month', None)
         ranked = self.request.query_params.get('ranked', None)
+        token = self.request.query_params.get('token', None)
+        if token is None or token != TOKEN:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         queryset = queryset.filter(sector=sector) if sector is not None else queryset
         queryset = queryset.filter(block__name=block) if block is not None else queryset
         queryset = queryset.filter(serial=serial) if serial is not None else queryset
@@ -84,6 +93,9 @@ class BlockWiseRankList(generics.ListAPIView):
         block = self.request.query_params.get('block', None)
         year = self.request.query_params.get('year', None)
         month = self.request.query_params.get('month', None)
+        token = self.request.query_params.get('token', None)
+        if token is None or token != TOKEN:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
         queryset = queryset.filter(block__name=block) if block is not None else queryset
         queryset = queryset.filter(period__year=year) if year is not None else queryset
         queryset = queryset.filter(period__month=month) if month is not None else queryset
@@ -149,6 +161,14 @@ def create_model(data, date, _sector):
                 sector=_sector,
                 created=date
             )
+        month = datetime.datetime.strptime(date, '%Y-%m-%d').month
+        year = datetime.datetime.strptime(date, '%Y-%m-%d').year
+        for _serial in health_indicators:
+            objs = Indicator.objects.all().filter(serial=_serial, created__month=month, created__year=year)
+            mx = Indicator.max_percent(serial=_serial, month=month, year=year)
+            for i in objs:
+                i.max = mx
+                i.save()
 
 
 def calculate_score(blocks, sector, month, year):
